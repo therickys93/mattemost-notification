@@ -5,9 +5,9 @@ services:
     build: .
     command: sh upload.sh
     environment:
-      - G_CHANNEL_ID=s8h3nn5oj7g57yds7c38by7k7y
-      - G_FILE_NAME=pippo.txt
-      - G_ACCESS_TOKEN=pxzuw57wtfnjiqbr4mt3131y8o
+      - G_CHANNEL_ID=<CHANNEL_ID>
+      - G_FILE_NAME=<FILENAME>
+      - G_ACCESS_TOKEN=<ACCESS_TOKEN>
       - G_FILES_URL=http://mattermost.wiki.home/api/v4/files
       - G_POSTS_URL=http://mattermost.wiki.home/api/v4/posts
-      - G_MESSAGE=very long file
+      - G_MESSAGE=<YOUR MESSAGE>

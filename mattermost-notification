@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+
+import sys
+import argparse
+from mattermostdriver import Driver
+
+def upload(message, filename):
+	url      = 'mattermost.wiki.home'
+	token    = 'pxzuw57wtfnjiqbr4mt3131y8o'
+
+	foo = Driver({
+	    'url': url,
+	    'token': token,
+	    'scheme': 'http',
+	    'port': 80,
+	})
+
+	foo.login()
+
+	# To upload a file you will need to pass a `files` dictionary
+	channel_id = foo.channels.get_channel_by_name_and_team_name('wiki', 'town-square')['id']
+	file_id = foo.files.upload_file(
+    	channel_id=channel_id,
+    	files={'files': (filename, open(filename))}
+	)['file_infos'][0]['id']
+
+
+	# track the file id and pass it in `create_post` options, to attach the file
+	foo.posts.create_post(options={
+	'channel_id': channel_id,
+	'message': message,
+	'file_ids': [file_id]})
+
+if __name__ == '__main__':
+	parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter, description='')
+	parser.add_argument('-m', '--message', default='',
+	                    help='Message')
+	parser.add_argument('-f', '--files', default='',
+	                    help='Files to link in the message.')
+	args = parser.parse_args()
+	upload(args.message, args.files)

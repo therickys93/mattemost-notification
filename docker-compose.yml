@@ -3,11 +3,4 @@ version: '2'
 services:
   notification:
     build: .
-    command: sh upload.sh
-    environment:
-      - G_CHANNEL_ID=<CHANNEL_ID>
-      - G_FILE_NAME=<FILENAME>
-      - G_ACCESS_TOKEN=<ACCESS_TOKEN>
-      - G_FILES_URL=http://mattermost.wiki.home/api/v4/files
-      - G_POSTS_URL=http://mattermost.wiki.home/api/v4/posts
-      - G_MESSAGE=<YOUR MESSAGE>
+    command: mattermost-notification -m "ciao" -f /etc/ca-certificates.conf

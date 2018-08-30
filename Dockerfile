@@ -1,5 +1,4 @@
-FROM alpine
-RUN apk update && apk upgrade
-RUN apk add curl jq zip
-WORKDIR /notify
-ADD upload.sh /notify/upload.sh
+FROM python:3.6-alpine
+RUN pip install mattermostdriver
+COPY mattermost-notification /usr/bin/
+RUN chmod +x /usr/bin/mattermost-notification

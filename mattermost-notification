@@ -33,7 +33,7 @@ def upload(message, filename):
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter, description='')
-	parser.add_argument('-m', '--message', default='',
+	parser.add_argument('-m', '--message', nargs='+', default='',
 	                    help='Message')
 	parser.add_argument('-f', '--files', default='',
 	                    help='Files to link in the message.')

@@ -21,7 +21,7 @@ def upload(message, filename):
 	channel_id = foo.channels.get_channel_by_name_and_team_name('wiki', 'town-square')['id']
 	file_id = foo.files.upload_file(
     	channel_id=channel_id,
-    	files={'files': (filename, open(filename))}
+    	files={'files': (filename, open(filename, 'rb'))}
 	)['file_infos'][0]['id']
 
 

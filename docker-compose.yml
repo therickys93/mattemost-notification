@@ -3,4 +3,6 @@ version: '2'
 services:
   notification:
     build: .
-    command: mattermost-notification -m ciao amico mio -f /etc/ca-certificates.conf
+    environment:
+        - MATTERMOST_ACCESS_TOKEN=pxzuw57wtfnjiqbr4mt3131y8o
+    command: mattermost-notification -m ciao amico mio -f /etc/ca-certificates.conf -t wiki -c town-square -u mattermost.wiki.home

@@ -4,8 +4,7 @@ import sys
 import argparse
 from mattermostdriver import Driver
 
-def upload(message, filename):
-	url      = 'mattermost.wiki.home'
+def upload(message, filename, team, channel, url):
 	token    = 'pxzuw57wtfnjiqbr4mt3131y8o'
 
 	foo = Driver({
@@ -18,7 +17,7 @@ def upload(message, filename):
 	foo.login()
 
 	# To upload a file you will need to pass a `files` dictionary
-	channel_id = foo.channels.get_channel_by_name_and_team_name('wiki', 'town-square')['id']
+	channel_id = foo.channels.get_channel_by_name_and_team_name(team, channel)['id']
 	file_id = foo.files.upload_file(
     	channel_id=channel_id,
     	files={'files': (filename, open(filename, 'rb'))}
@@ -37,6 +36,9 @@ if __name__ == '__main__':
 	                    help='Message')
 	parser.add_argument('-f', '--files', default='',
 	                    help='Files to link in the message.')
+	parser.add_argument('-t', '--team', help='The name of the team')
+	parser.add_argument('-c', '--channel', help='The name of the channel')
+	parser.add_argument('-u', '--url', help='The url of Mattermost')
 	args = parser.parse_args()
 	arg_str = ' '.join(args.message)
-	upload(arg_str, args.files)
+	upload(arg_str, args.files, args.team, args.channel, args.url)

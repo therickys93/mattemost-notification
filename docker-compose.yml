@@ -3,4 +3,4 @@ version: '2'
 services:
   notification:
     build: .
-    command: mattermost-notification -m ciao amico mio -f /etc/ca-certificates.conf
+    command: mattermost-notification -m ciao amico mio -f /etc/ca-certificates.conf -t wiki -c town-square -u mattermost.wiki.home

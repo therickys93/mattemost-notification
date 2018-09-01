@@ -39,4 +39,4 @@ if __name__ == '__main__':
 	                    help='Files to link in the message.')
 	args = parser.parse_args()
 	arg_str = ' '.join(args.message)
-	upload(args.message, args.files)
+	upload(arg_str, args.files)

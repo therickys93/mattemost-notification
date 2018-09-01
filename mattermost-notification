@@ -2,10 +2,29 @@
 
 import sys
 import argparse
+import os
 from mattermostdriver import Driver
 
+env = {}
+
+class MattermostError(RuntimeError):
+    pass
+
+def fetch_env_var(name, msg):
+	if name not in env:
+		try:
+			env[name] = os.environ[name]
+		except KeyError:
+			raise MattermostError('Missing environment variable \'{}\': {}'.format(name, msg))
+	return env[name]
+
+def fetch_all_env():
+	env_local = {'MATTERMOST_ACCESS_TOKEN': 'Add you personal access token for Mattermost.'}
+	for var, msg in env_local.items():
+		fetch_env_var(var, msg)
+
 def upload(message, filename, team, channel, url):
-	token    = 'pxzuw57wtfnjiqbr4mt3131y8o'
+	token    = env['MATTERMOST_ACCESS_TOKEN']
 
 	foo = Driver({
 	    'url': url,
@@ -41,4 +60,9 @@ if __name__ == '__main__':
 	parser.add_argument('-u', '--url', help='The url of Mattermost')
 	args = parser.parse_args()
 	arg_str = ' '.join(args.message)
-	upload(arg_str, args.files, args.team, args.channel, args.url)
+	try:
+		fetch_all_env()
+		upload(arg_str, args.files, args.team, args.channel, args.url)
+	except MattermostError as err:
+		print(err)
+		sys.exit(1)
